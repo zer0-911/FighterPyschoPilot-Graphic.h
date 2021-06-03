@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "stdio.h": "c",
+        "random": "cpp",
+        "cmath": "cpp",
+        "*.tcc": "cpp"
+    },
+    "python.pythonPath": "C:\\Users\\MOH. IQBAL\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
+}
