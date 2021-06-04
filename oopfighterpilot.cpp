@@ -241,6 +241,7 @@ void init(float xpmusuh, float ypmusuh, float rpmusuh)
 }
 void GerakPesawatMusuh() 
 {
+    srand(time(0));
     xpm=xpm-8;
         if(xpm<=0)
         {
@@ -250,6 +251,16 @@ void GerakPesawatMusuh()
                 ypm=70;
             }
         }
+        /*else if((xpel[i]>-3*25+xpm)&&(xpel[i]<-1.5*25+xpm)&&(ypel[i]<0.5*25+ypm)&&(ypel[i]>-0.62*25+ypm))
+        {
+            xpm=1500;
+            ypm=rand()%450;
+            if(ypm<70){
+                ypm=70;
+            }
+            //z=z+3;
+            fpel[i]=0;
+        }*/
 }
 void PesawatMusuh()
 {

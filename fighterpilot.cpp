@@ -399,9 +399,9 @@ void gameplay()
     float xg1,yg1,xg2,yg2,xg3,yg3,xg4,yg4,xg5,yg5,xg6,yg6,xg7,yg7,xg8,yg8,xg9,yg9;
     int scA1,scA2,scA3,scA4,scA5,scA6,scA7,scA8;;
     float xa1,ya1,xa2,ya2,xa3,ya3,xa4,ya4,xa5,ya5,xa6,ya6,xa7,ya7,xa8,ya8;
-    float fp,xpeluru,ypeluru;
+    float fpeluru[20],xpeluru[20],ypeluru[20];
     char skorstr[999];
-    int z=0;
+    int z=0,skor=0;
     int page = 0;
     xp1=800;
     yp1=400;
@@ -454,6 +454,10 @@ void gameplay()
     xa8=500;
     ya8=200;
 
+    for (int i = 0; i < 20; i++)
+    {
+        fpeluru[i]=0;
+    }
     //Player
     xplayer= 200;
     yplayer= 200;
@@ -465,66 +469,35 @@ void gameplay()
         cleardevice();
         //readimagefile("langit1.jpg",0,0,1400,700);
         PesawatV2(xp1,yp1,20);
-        xp1=xp1-8;
-        if(xp1<=0)
-        {
-            xp1=1500;
-            yp1=rand()%450;
-            if(yp1<70){
-                yp1=70;
+            xp1=xp1-8;
+            if(xp1<=0)
+            {
+                xp1=1500;
+                yp1=rand()%450;
+                if(yp1<70){
+                    yp1=70;
+                }
             }
-        }
-        else if((xpeluru>-3*25+xp1)&&(xpeluru<-1.5*25+xp1)&&(ypeluru<0.5*25+yp1)&&(ypeluru>-0.62*25+yp1))
-        {
-            xp1=1500;
-            yp1=rand()%450;
-            if(yp1<70){
-                yp1=70;
-            }
-            z=z+3;
-            fp=0;
-        }
         PesawatV2(xp2,yp2,20);
-        xp2=xp2-8;
-        if(xp2<=0)
-        {
-            xp2=1500;
-            yp2=rand()%450;
-            if(yp2<70){
-                yp2=70;
+            xp2=xp2-8;
+            if(xp2<=0)
+            {
+                xp2=1500;
+                yp2=rand()%450;
+                if(yp2<70){
+                    yp2=70;
+                }
             }
-        }
-        else if((xpeluru>-3*25+xp2)&&(xpeluru<-1.5*25+xp2)&&(ypeluru<0.5*25+yp2)&&(ypeluru>-0.62*25+yp2))
-        {
-            xp2=1500;
-            yp2=rand()%450;
-            if(yp2<70){
-                yp2=70;
-            }
-            z=z+3;
-            fp=0;
-        }
         PesawatV2(xp3,yp3,20);
-        xp3=xp3-8;
-        if(xp3<=0)
-        {
-            xp3=1500;
-            yp3=rand()%450;
-            if(yp3<70){
-                yp3=70;
+            xp3=xp3-8;
+            if(xp3<=0)
+            {
+                xp3=1500;
+                yp3=rand()%450;
+                if(yp3<70){
+                    yp3=70;
+                }
             }
-            fp=0;
-        }
-        else if((xpeluru>-3*25+xp3)&&(xpeluru<-1.5*25+xp3)&&(ypeluru<0.5*25+yp3)&&(ypeluru>-0.62*25+yp3))
-        {
-            xp3=1500;
-            yp3=rand()%450;
-            if(yp3<70){
-                yp3=70;
-            }
-            z=z+3;
-            fp=0;
-        }
         PesawatV2(xp4,yp4,20);
         xp4=xp4-8;
         if(xp4<=0)
@@ -532,18 +505,56 @@ void gameplay()
             xp4=1500;
             yp4=rand()%450;
             if(yp4<70){
-                yp4=70;
+            yp4=70;
             }
         }
-        else if((xpeluru>-3*25+xp4)&&(xpeluru<-1.5*25+xp4)&&(ypeluru<0.5*25+yp4)&&(ypeluru>-0.62*25+yp4))
+        for(int i=0; i < 20; i++)
         {
-            xp4=1500;
-            yp4=rand()%450;
-            if(yp4<70){
-                yp4=70;
+            //peluru
+            if((xpeluru[i]>-3*20+xp1)&&(xpeluru[i]<-1.5*20+xp1)&&(ypeluru[i]<0.5*20+yp1)&&(ypeluru[i]>-0.62*20+yp1))
+            {
+                xp1=1500;
+                yp1=rand()%450;
+                if(yp1<70){
+                    yp1=70;
+                }
+                z+=3;
+                fpeluru[i]=0;
+                skor=1;
             }
-            z=z+3;
-            fp=0;
+            if((xpeluru[i]>-3*25+xp2)&&(xpeluru[i]<-1.5*25+xp2)&&(ypeluru[i]<0.5*25+yp2)&&(ypeluru[i]>-0.62*25+yp2))
+            {
+                xp2=1500;
+                yp2=rand()%450;
+                if(yp2<70){
+                    yp2=70;
+                }
+                z+=3;
+                fpeluru[i]=0;
+                skor=1;
+            }
+            if((xpeluru[i]>-3*25+xp3)&&(xpeluru[i]<-1.5*25+xp3)&&(ypeluru[i]<0.5*25+yp3)&&(ypeluru[i]>-0.62*25+yp3))
+            {
+                xp3=1500;
+                yp3=rand()%450;
+                if(yp3<70){
+                    yp3=70;
+                }
+                z+=3;
+                fpeluru[i]=0;
+                skor=1;
+            }
+            if((xpeluru[i]>-3*25+xp4)&&(xpeluru[i]<-1.5*25+xp4)&&(ypeluru[i]<0.5*25+yp4)&&(ypeluru[i]>-0.62*25+yp4))
+            {
+                xp4=1500;
+                yp4=rand()%450;
+                if(yp4<70){
+                    yp4=70;
+                }
+                z+=3;
+                fpeluru[i]=0;
+                skor=1;
+            }
         }
         Gedung1(xg1,yg1,20);
         xg1=xg1-6;
@@ -615,8 +626,6 @@ void gameplay()
         }
         Awan(xa3,ya3,scA3);
         xa3=xa3-6;
-        Awan(xa3,ya3,scA3);
-        xa3=xa3-3;
         if(xa3<-20)
         {
             xa3=1450;
@@ -652,9 +661,14 @@ void gameplay()
             xa8=1450;
         }
         //Skor
+        if(skor==1)
+        {
+            z=z+3;
+            skor=0;
+        }
         if(xp1>=1500||xp2>=1500||xp3>=1500||xp4>=1500)
         {
-            z=z+1;
+            z=z-3;
         }
         sprintf(skorstr, "---Score = %d---", z);
         setcolor(YELLOW);
@@ -699,15 +713,27 @@ void gameplay()
         }
         if(ismouseclick(WM_LBUTTONDOWN))
         {
-            xpeluru=xplayer+(2.1*20);
-            ypeluru=yplayer+(0.65*20);
-            fp=1;
-            clearmouseclick(WM_LBUTTONDOWN);
+            for (int i = 0; i < 20; i++) {
+                if (fpeluru[i] == 0)
+                {
+                    fpeluru[i]=1;
+                    xpeluru[i]=xplayer+(2.1*20);
+                    ypeluru[i]=yplayer+(0.65*20);
+                    clearmouseclick(WM_LBUTTONDOWN);
+                    break;
+                }
+            }
         }
-        if(fp==1)
-        {
-             xpeluru=xpeluru+24;
-             Peluru(xpeluru,ypeluru,2);
+        for (int i = 0; i < 20; i++) {
+            if(fpeluru[i]==1)
+            {
+                xpeluru[i]=xpeluru[i]+24;
+                Peluru(xpeluru[i],ypeluru[i],2);
+                if (xpeluru[i] > 1500)
+                {
+                    fpeluru[i] = 0;
+                }
+            }
         }
         if( GetAsyncKeyState(27) < 0 )
         {   
@@ -737,7 +763,7 @@ void gameover()
     if( GetAsyncKeyState('\r') < 0 )
 		{
 			cleardevice();	
-			loadingscreen();	
+			menu();	
             break;
         }
     }
@@ -760,13 +786,13 @@ void menu()
 {
 	//settextstyle(10, HORIZ_DIR, 5);
 	//outtextxy(500, 100, "Fighter Pyscho Pilot")    
-    readimagefile("Assets/MmFPP.jpg",300,50,1200,250);
+    readimagefile("Assets/MmFPP.jpg",0,0,1400,700);
 	settextstyle(0, HORIZ_DIR, 3);
     setcolor(15);
-	outtextxy(690, 250, "Play");
-	outtextxy(600, 300, "How To Play");
-	outtextxy(680, 350, "About");
-	outtextxy(690, 400, "Exit");
+	outtextxy(290, 250, "Play");
+	outtextxy(200, 300, "How To Play");
+	outtextxy(280, 350, "About");
+	outtextxy(290, 400, "Exit");
 	controls_menu();
 }
 void controls_menu()
@@ -796,7 +822,6 @@ void controls_menu()
 						{
 							if(cm  == 1)
 							{
-                                cleardevice();
 								gameplay();
                                 break;
 							}
@@ -823,40 +848,40 @@ void controls_menu()
     	{		
 				settextstyle(0, HORIZ_DIR, 3);
 				setcolor(1);
-				outtextxy(690, 250, "Play");
+				outtextxy(290, 250, "Play");
 				setcolor(15);
-				outtextxy(600, 300, "How To Play");
-				outtextxy(680, 350, "About");
-				outtextxy(690, 400, "Exit");
+				outtextxy(200, 300, "How To Play");
+				outtextxy(280, 350, "About");
+				outtextxy(290, 400, "Exit");
 		}
 		else if(cm  == 2)
 		{
 				settextstyle(0, HORIZ_DIR, 3);
-				outtextxy(690, 250, "Play");
+				outtextxy(290, 250, "Play");
 				setcolor(1);
-				outtextxy(600, 300, "How To Play");
+				outtextxy(200, 300, "How To Play");
 				setcolor(15);
-				outtextxy(680, 350, "About");
-				outtextxy(690, 400, "Exit");
+				outtextxy(280, 350, "About");
+				outtextxy(290, 400, "Exit");
 		}
 		else if(cm  == 3)
 		{
 				settextstyle(0, HORIZ_DIR, 3);
-				outtextxy(690, 250, "Play");			
-				outtextxy(600, 300, "How To Play");
+				outtextxy(290, 250, "Play");			
+				outtextxy(200, 300, "How To Play");
 				setcolor(1);
-				outtextxy(680, 350, "About");
+				outtextxy(280, 350, "About");
 				setcolor(15);
-				outtextxy(690, 400, "Exit");
+				outtextxy(290, 400, "Exit");
 		}
 		else if(cm  == 4)
 		{
 				settextstyle(0, HORIZ_DIR, 3);
-				outtextxy(690, 250, "Play");				
-				outtextxy(600, 300, "How To Play");
-				outtextxy(680, 350, "About");
+				outtextxy(290, 250, "Play");				
+				outtextxy(200, 300, "How To Play");
+				outtextxy(280, 350, "About");
 				setcolor(1);
-				outtextxy(690, 400, "Exit");
+				outtextxy(290, 400, "Exit");
 				setcolor(15);
 		}
     }
