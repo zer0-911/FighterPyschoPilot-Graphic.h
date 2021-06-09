@@ -1,2 +1,8 @@
 1. About ----> pembuatan game dan credit
 2. How To Play -----> Games Rules ----> Controls (Page 2)
+
+1. pasang Rocket
+2. Level ---> kecepatan pesawat musuh, - yang didapat
+3. tekstur pesawat
+
+GASINNN

@@ -17,10 +17,14 @@ private:
     float x20,y20,x21,y21,x22,y22,x23,y23,x24,y24;
     float x25,y25,x26,y26,x27,y27,x28,y28,x29,y29;
     float x30,y30,x31,y31,x32,y32,x33,y33,x34,y34;
+    float x35,y35,x36,y36,x37,y37,x38,y38,x39,y39;
+    float x40,y40,x41,y41,x42,y42,x43,y43,x44,y44;
+    float x45,y45,x46,y46,x47,y47,x48,y48,x49,y49;
+    float x50,y50,x51,y51,x52,y52,x53,y53;
     
 public:
-    float xpel[100],ypel[100];
-    int fpel[100];
+    float xpel[100],ypel[100], xrok[100], yrok[100], xrok2[100], yrok2[100];
+    int fpel[100],froket[4];
     int i;
     void init(float xplayer,float yplayer,float rplayer)
     {
@@ -33,6 +37,14 @@ public:
             xpel[i]=0;
             ypel[i]=0;
             fpel[i]=0;
+        }
+        for (int  i =0;i<5;i++)
+        {
+            xrok[i]=0;
+            yrok[i]=0;
+            xrok2[i]=0;
+            yrok2[i]=0;
+            froket[i]=0;
         }
     }
     void GerakPesawat()
@@ -167,6 +179,42 @@ public:
         line(x34*rp+xp,-y34*rp+yp,x31*rp+xp,-y31*rp+yp);
         floodfill(1.75*rp+xp,0.65*rp+yp,WHITE);
         floodfill(3.08*rp+xp,0.65*rp+yp,WHITE);
+        //roket kanan
+        x35=-0.21;y35=-1.2;//G1
+        x36=0.14;y36=-1.2;//H1
+        x37=0.2;y37=-1.2;//I1
+        x38=0.36;y38=-1.12;//A1
+        x39=0.2;y39=-1.04;//J1
+        x40=0.14;y40=-1.04;//K1
+        x41=0.06;y41=-1.04;//L1
+        x42=0.14;y42=-1.24;//M1
+        x43=0.14;y43=-1;//N1
+        line(x35*rp+xp,-y35*rp+yp,x37*rp+xp,-y37*rp+yp);
+        line(x37*rp+xp,-y37*rp+yp,x38*rp+xp,-y38*rp+yp);
+        line(x38*rp+xp,-y38*rp+yp,x39*rp+xp,-y39*rp+yp);
+        line(x39*rp+xp,-y39*rp+yp,x41*rp+xp,-y41*rp+yp);
+        line(x36*rp+xp,-y36*rp+yp,x42*rp+xp,-y42*rp+yp);
+        line(x42*rp+xp,-y42*rp+yp,x37*rp+xp,-y37*rp+yp);
+        line(x41*rp+xp,-y41*rp+yp,x43*rp+xp,-y43*rp+yp);
+        line(x43*rp+xp,-y43*rp+yp,x39*rp+xp,-y39*rp+yp);
+        //roket kiri
+        x44=0.06;y44=1.18;//G1
+        x45=0.14;y45=1.18;//H1
+        x46=0.2;y46=1.18;//I1
+        x47=0.42;y47=1.26;//A1
+        x48=0.2;y48=1.34;//J1
+        x49=0.14;y49=1.34;//K1
+        x50=-0.15;y50=1.34;//L1
+        x51=0.14;y51=1.14;//M1
+        x52=0.14;y52=1.38;//N1
+        line(x44*rp+xp,-y44*rp+yp,x46*rp+xp,-y46*rp+yp);
+        line(x46*rp+xp,-y46*rp+yp,x47*rp+xp,-y47*rp+yp);
+        line(x47*rp+xp,-y47*rp+yp,x48*rp+xp,-y48*rp+yp);
+        line(x48*rp+xp,-y48*rp+yp,x50*rp+xp,-y50*rp+yp);
+        line(x45*rp+xp,-y45*rp+yp,x51*rp+xp,-y51*rp+yp);
+        line(x51*rp+xp,-y51*rp+yp,x46*rp+xp,-y46*rp+yp);
+        line(x49*rp+xp,-y49*rp+yp,x52*rp+xp,-y52*rp+yp);
+        line(x52*rp+xp,-y52*rp+yp,x48*rp+xp,-y48*rp+yp);
     }
     void PeluruMenembak()
     {
@@ -218,6 +266,68 @@ public:
             {
                 clearmouseclick(WM_LBUTTONDOWN);
                 Peluru();
+            }
+    }
+    void roketmeluncur()
+    {
+        float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
+        float x5,y5,x6,y6,x7,y7,x8,y8;
+        for (int i=0;i<5;i++)
+        {
+            if (froket[i]==1)
+            {
+                xrok[i]=xrok[i]+25;
+                if (xrok[i]>1500)
+                {
+                    froket[i]=0;
+                }
+                xrok2[i]=xrok2[i]+25;
+                if (xrok2[i]>1500)
+                {
+                    froket[i]=0;
+                }
+                x0=2;y0=0;//A
+                x1=1;y1=0.2;//B
+                x2=-1.5;y2=0.2;//G
+                x3=-1.5;y3=-0.2;//H
+                x4=1;y4=-0.2;//I
+                setcolor(WHITE);
+                setfillstyle(SOLID_FILL, YELLOW);
+                line(x0*5+xrok[i],y0*5+yrok[i],x1*5+xrok[i],y1*5+yrok[i]);
+                line(x1*5+xrok[i],y1*5+yrok[i],x2*5+xrok[i],y2*5+yrok[i]);
+                line(x2*5+xrok[i],y2*5+yrok[i],x3*5+xrok[i],y3*5+yrok[i]);
+                line(x3*5+xrok[i],y3*5+yrok[i],x4*5+xrok[i],y4*5+yrok[i]);
+                line(x0*5+xrok[i],y0*5+yrok[i],x4*5+xrok[i],y4*5+yrok[i]);
+                line(x0*5+xrok2[i],y0*5+yrok2[i],x1*5+xrok2[i],y1*5+yrok2[i]);
+                line(x1*5+xrok2[i],y1*5+yrok2[i],x2*5+xrok2[i],y2*5+yrok2[i]);
+                line(x2*5+xrok2[i],y2*5+yrok2[i],x3*5+xrok2[i],y3*5+yrok2[i]);
+                line(x3*5+xrok2[i],y3*5+yrok2[i],x4*5+xrok2[i],y4*5+yrok2[i]);
+                line(x0*5+xrok2[i],y0*5+yrok2[i],x4*5+xrok2[i],y4*5+yrok2[i]);
+            }
+        }
+    }
+    void roket()
+    {
+        for (int i=0;i<5;i++)
+        {
+            if (froket[i]==0)
+            {
+                froket[i]=1;
+                xrok[i]=xp+(0.36*20);
+                yrok[i]=yp+(-1.12*20);
+                xrok2[i]=xp+(0.42*20);
+                yrok2[i]=yp+(1.26*20);
+                break;
+
+            }
+        }
+    }
+    void RTembak()
+    {
+             if (ismouseclick(WM_RBUTTONDOWN))
+            {
+                clearmouseclick(WM_RBUTTONDOWN);
+                roket();
             }
     }
 };
@@ -580,6 +690,8 @@ int main()
         p1.Pesawat();
         p1.Tembak();
         p1.PeluruMenembak();
+        p1.RTembak();
+        p1.roketmeluncur();
         //PesawatMusuh1
         pm1.PesawatMusuh();
         pm1.GerakPesawatMusuh();

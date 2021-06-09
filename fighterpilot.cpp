@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include <conio.h>
 
-void gameover(), loadingscreen(), gameplay(), controls_menu(), menu(), controlsgame(), howtoplay(), controlsgame_controls(), howtoplay_controls(), about(), about_controls();
+void gameover(), loadingscreen(), gameplay(), controls_menu(), menu(), controlsgame(), howtoplay();
+void controlsgame_controls(), howtoplay_controls(), about(), about_controls();
 int section = 0;
 void PesawatV1(float xp,float yp,float sc) 
 { 
@@ -349,27 +350,45 @@ void Gedung4(float xp, float yp, float sc)
     floodfill(3.97*sc+xp,-1.19*sc+yp,WHITE);
     floodfill(3.53*sc+xp,-1.44*sc+yp,WHITE);
 }
-void Awan(float xp,float yp,float sc)
+class CAwan
 {
+private:
     float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
-    float x5,y5;
-
-    x0=3.1506;y0=3.2954;
-    x1=5.3198;y1=6.2771;
-    x2=8.5009;y2=6.6746;
-    x3=12.4;y3=3.3324;
-    x4=7.5618;y4=70.7284;
-    setcolor(WHITE);
-    setfillstyle(SOLID_FILL,WHITE);
-    arc(x0*sc+xp,-y0*sc+yp,73,274,2.831*sc);
-    arc(x1*sc+xp,-y1*sc+yp,65,206,2.2518*sc);
-    arc(x2*sc+xp,-y2*sc+yp,340,159,3.6669*sc);
-    arc(x3*sc+xp,-y3*sc+yp,262,118,2.8734*sc);
-    arc(x4*sc+xp,-y4*sc+yp,266,274,70.401*sc);
-    floodfill(0.8499*sc+xp,-3.5341*sc+yp,WHITE);
-    floodfill(14.991*sc+xp,-3.5341*sc+yp,WHITE);
-    floodfill(8.4868*sc+xp,-9.931*sc+yp,WHITE);
-}
+    float xp,yp,rp;
+public:
+    void init(float xawan,float yawan,float rawan)
+    {
+        xp=xawan;
+        yp=yawan;
+        rp=rawan;
+    }
+    void DrawAwan()
+    {
+        x0=3.1506;y0=3.2954;
+        x1=5.3198;y1=6.2771;
+        x2=8.5009;y2=6.6746;
+        x3=12.4;y3=3.3324;
+        x4=7.5618;y4=70.7284;
+        setcolor(WHITE);
+        setfillstyle(SOLID_FILL,WHITE);
+        arc(x0*rp+xp,-y0*rp+yp,73,274,2.831*rp);
+        arc(x1*rp+xp,-y1*rp+yp,65,206,2.2518*rp);
+        arc(x2*rp+xp,-y2*rp+yp,340,159,3.6669*rp);
+        arc(x3*rp+xp,-y3*rp+yp,262,118,2.8734*rp);
+        arc(x4*rp+xp,-y4*rp+yp,266,274,70.401*rp);
+        floodfill(0.8499*rp+xp,-3.5341*rp+yp,WHITE);
+        floodfill(14.991*rp+xp,-3.5341*rp+yp,WHITE);
+        floodfill(8.4868*rp+xp,-9.931*rp+yp,WHITE);
+    }
+    void GerakAwan()
+    {
+        xp=xp-6;
+        if(xp<-20)
+        {
+            xp=1450;
+        }
+    }
+};
 void Peluru(float xp, float yp, float sc)
 {
     float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
@@ -403,13 +422,13 @@ void gameplay()
     char skorstr[999];
     int z=0,skor=0;
     int page = 0;
-    xp1=800;
+    xp1=1800;
     yp1=400;
-    xp2=400;
+    xp2=1400;
     yp2=400;
-    xp3=700;
+    xp3=1700;
     yp3=200;
-    xp4=200;
+    xp4=1200;
     yp4=350;
     xg1=400;
     yg1=720;
@@ -429,30 +448,16 @@ void gameplay()
     yg8=720;
     xg9=50;
     yg9=720;
-    scA1=10;
-    scA2=5;
-    scA3=10;
-    scA4=14;
-    scA5=10;
-    scA6=5;
-    scA7=10;
-    scA8=14;
-    xa1=40;
-    ya1=400;
-    xa2=190;
-    ya2=200;
-    xa3=800;
-    ya3=500;
-    xa4=1000;
-    ya4=100;
-    xa5=700;
-    ya5=400;
-    xa6=900;
-    ya6=250;
-    xa7=1200;
-    ya7=300;
-    xa8=500;
-    ya8=200;
+
+    CAwan a1,a2,a3,a4,a5,a6,a7,a8;
+    a1.init(40,400,10);
+    a2.init(190,200,5);
+    a3.init(800,500,10);
+    a4.init(1000,100,14);
+    a5.init(700,400,10);
+    a6.init(900,250,5);
+    a7.init(1200,300,10);
+    a8.init(500,200,14);
 
     for (int i = 0; i < 20; i++)
     {
@@ -461,7 +466,7 @@ void gameplay()
     //Player
     xplayer= 200;
     yplayer= 200;
-    
+    //sndPlaySound("Sound/gameplay.wav",SND_ASYNC|SND_LOOP);  
     while(1)
     {
         setactivepage(page);
@@ -518,40 +523,36 @@ void gameplay()
                 if(yp1<70){
                     yp1=70;
                 }
-                z+=3;
                 fpeluru[i]=0;
                 skor=1;
             }
-            if((xpeluru[i]>-3*25+xp2)&&(xpeluru[i]<-1.5*25+xp2)&&(ypeluru[i]<0.5*25+yp2)&&(ypeluru[i]>-0.62*25+yp2))
+            if((xpeluru[i]>-3*20+xp2)&&(xpeluru[i]<-1.5*20+xp2)&&(ypeluru[i]<0.5*20+yp2)&&(ypeluru[i]>-0.62*20+yp2))
             {
                 xp2=1500;
                 yp2=rand()%450;
                 if(yp2<70){
                     yp2=70;
                 }
-                z+=3;
                 fpeluru[i]=0;
                 skor=1;
             }
-            if((xpeluru[i]>-3*25+xp3)&&(xpeluru[i]<-1.5*25+xp3)&&(ypeluru[i]<0.5*25+yp3)&&(ypeluru[i]>-0.62*25+yp3))
+            if((xpeluru[i]>-3*20+xp3)&&(xpeluru[i]<-1.5*20+xp3)&&(ypeluru[i]<0.5*20+yp3)&&(ypeluru[i]>-0.62*20+yp3))
             {
                 xp3=1500;
                 yp3=rand()%450;
                 if(yp3<70){
                     yp3=70;
                 }
-                z+=3;
                 fpeluru[i]=0;
                 skor=1;
             }
-            if((xpeluru[i]>-3*25+xp4)&&(xpeluru[i]<-1.5*25+xp4)&&(ypeluru[i]<0.5*25+yp4)&&(ypeluru[i]>-0.62*25+yp4))
+            if((xpeluru[i]>-3*20+xp4)&&(xpeluru[i]<-1.5*20+xp4)&&(ypeluru[i]<0.5*20+yp4)&&(ypeluru[i]>-0.62*20+yp4))
             {
                 xp4=1500;
                 yp4=rand()%450;
                 if(yp4<70){
                     yp4=70;
                 }
-                z+=3;
                 fpeluru[i]=0;
                 skor=1;
             }
@@ -612,61 +613,29 @@ void gameplay()
         }
         xplayer=xplayer-6;
         PesawatV1(xplayer,yplayer,20);
-        Awan(xa1,ya1,scA1);
-        xa1=xa1-6;
-        if(xa1<-400)
-        {
-            xa1=1450;
-        }
-        Awan(xa2,ya2,scA2);
-        xa2=xa2-6;
-        if(xa2<-20)
-        {
-            xa2=1450;
-        }
-        Awan(xa3,ya3,scA3);
-        xa3=xa3-6;
-        if(xa3<-20)
-        {
-            xa3=1450;
-        }
-        Awan(xa4,ya4,4);
-        xa4=xa4-6;
-        if(xa4<-20)
-        {
-            xa4=1450;
-        }
-         Awan(xa5,ya5,scA5);
-        xa5=xa5-6;
-        if(xa5<-400)
-        {
-            xa5=1450;
-        }
-        Awan(xa6,ya6,scA6);
-        xa6=xa6-6;
-        if(xa6<-20)
-        {
-            xa6=1450;
-        }
-        Awan(xa7,ya7,scA7);
-        xa7=xa7-6;
-        if(xa7<-20)
-        {
-            xa7=1450;
-        }
-        Awan(xa8,ya8,4);
-        xa8=xa8-6;
-        if(xa8<-20)
-        {
-            xa8=1450;
-        }
+        a1.DrawAwan();
+        a1.GerakAwan();
+        a2.DrawAwan();
+        a2.GerakAwan();
+        a3.DrawAwan();
+        a3.GerakAwan();
+        a4.DrawAwan();
+        a4.GerakAwan();
+        a5.DrawAwan();
+        a5.GerakAwan();
+        a6.DrawAwan();
+        a6.GerakAwan();
+        a7.DrawAwan();
+        a7.GerakAwan();
+        a8.DrawAwan();
+        a8.GerakAwan();
         //Skor
         if(skor==1)
         {
             z=z+3;
             skor=0;
         }
-        if(xp1>=1500||xp2>=1500||xp3>=1500||xp4>=1500)
+        if(xp1<=10||xp2<=10||xp3<=10||xp4<=10)
         {
             z=z-3;
         }
@@ -716,6 +685,7 @@ void gameplay()
             for (int i = 0; i < 20; i++) {
                 if (fpeluru[i] == 0)
                 {
+                    sndPlaySound("Sound/gun.wav",SND_ASYNC);   
                     fpeluru[i]=1;
                     xpeluru[i]=xplayer+(2.1*20);
                     ypeluru[i]=yplayer+(0.65*20);
@@ -770,10 +740,11 @@ void gameover()
 }
 void loadingscreen()
 {
+    sndPlaySound("Sound/loading.wav",SND_ASYNC|SND_LOOP);  
     settextstyle(0, HORIZ_DIR, 2);
     outtextxy(675,350, "Loading...");
     rectangle(199+460,179+150, 350+460, 191+150 );
-    for(int i = 0; i<150;i++)
+    for(float i = 0; i<150;i+=1.2)
     {
         setcolor(4);
         rectangle(200+460,180+150,200+460+i, 190+150 );
@@ -785,7 +756,8 @@ void loadingscreen()
 void menu()
 {
 	//settextstyle(10, HORIZ_DIR, 5);
-	//outtextxy(500, 100, "Fighter Pyscho Pilot")    
+	//outtextxy(500, 100, "Fighter Pyscho Pilot")
+    sndPlaySound("Sound/main.wav",SND_ASYNC|SND_LOOP);  
     readimagefile("Assets/MmFPP.jpg",0,0,1400,700);
 	settextstyle(0, HORIZ_DIR, 3);
     setcolor(15);
@@ -822,6 +794,7 @@ void controls_menu()
 						{
 							if(cm  == 1)
 							{
+                                sndPlaySound(NULL,0);
 								gameplay();
                                 break;
 							}
@@ -889,6 +862,8 @@ void controls_menu()
 void howtoplay()
 {
         cleardevice();
+        sndPlaySound(NULL,0);
+        sndPlaySound("Sound/how.wav",SND_ASYNC|SND_LOOP);   
         readimagefile("Assets/GpFPP.jpg",0,0,1400,700);
         howtoplay_controls();
 }
@@ -918,6 +893,8 @@ void howtoplay_controls()
 void controlsgame()
 {
         cleardevice();
+        sndPlaySound(NULL,0);
+        sndPlaySound("Sound/how.wav",SND_ASYNC|SND_LOOP);   
         readimagefile("Assets/GcFPP.jpg",0,0,1400,700);
         controlsgame_controls();
 }
@@ -947,6 +924,8 @@ void controlsgame_controls()
 void about()
 {
     cleardevice();
+    sndPlaySound(NULL,0);
+    sndPlaySound("Sound/about.wav",SND_ASYNC|SND_LOOP);   
     readimagefile("Assets/AboutFPP.jpg",0,0,1400,700);
     about_controls();
 }
