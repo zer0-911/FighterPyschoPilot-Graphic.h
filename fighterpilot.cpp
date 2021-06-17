@@ -8,7 +8,9 @@
 
 void gameover(), loadingscreen(), gameplay(), controls_menu(), menu(), controlsgame(), howtoplay();
 void controlsgame_controls(), howtoplay_controls(), about(), about_controls();
+void level(), level_controls();
 int section = 0;
+int speed = 0;
 void PesawatV1(float xp,float yp,float sc) 
 { 
     float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
@@ -18,6 +20,10 @@ void PesawatV1(float xp,float yp,float sc)
     float x20,y20,x21,y21,x22,y22,x23,y23,x24,y24;
     float x25,y25,x26,y26,x27,y27,x28,y28,x29,y29;
     float x30,y30,x31,y31,x32,y32,x33,y33,x34,y34;
+    float x35,y35,x36,y36,x37,y37,x38,y38,x39,y39;
+    float x40,y40,x41,y41,x42,y42,x43,y43,x44,y44;
+    float x45,y45,x46,y46,x47,y47,x48,y48,x49,y49;
+    float x50,y50,x51,y51,x52,y52,x53,y53;
     
 //Badan Pesawat 
     x0=3.15896;y0=-0.00964;//A
@@ -114,6 +120,43 @@ void PesawatV1(float xp,float yp,float sc)
     line(x34*sc+xp,-y34*sc+yp,x31*sc+xp,-y31*sc+yp);
     floodfill(1.75*sc+xp,0.65*sc+yp,WHITE);
     floodfill(3.08*sc+xp,0.65*sc+yp,WHITE);
+    //roket kanan
+    x35=-0.21;y35=-1.2;//G1
+    x36=0.14;y36=-1.2;//H1
+    x37=0.2;y37=-1.2;//I1
+    x38=0.36;y38=-1.12;//A1
+    x39=0.2;y39=-1.04;//J1
+    x40=0.14;y40=-1.04;//K1
+    x41=0.06;y41=-1.04;//L1
+    x42=0.14;y42=-1.24;//M1
+    x43=0.14;y43=-1;//N1
+    line(x35*sc+xp,-y35*sc+yp,x37*sc+xp,-y37*sc+yp);
+    line(x37*sc+xp,-y37*sc+yp,x38*sc+xp,-y38*sc+yp);
+    line(x38*sc+xp,-y38*sc+yp,x39*sc+xp,-y39*sc+yp);
+    line(x39*sc+xp,-y39*sc+yp,x41*sc+xp,-y41*sc+yp);
+    line(x36*sc+xp,-y36*sc+yp,x42*sc+xp,-y42*sc+yp);
+    line(x42*sc+xp,-y42*sc+yp,x37*sc+xp,-y37*sc+yp);
+    line(x41*sc+xp,-y41*sc+yp,x43*sc+xp,-y43*sc+yp);
+    line(x43*sc+xp,-y43*sc+yp,x39*sc+xp,-y39*sc+yp);
+    //roket kiri
+    x44=0.06;y44=1.18;//G1
+    x45=0.14;y45=1.18;//H1
+    x46=0.2;y46=1.18;//I1
+    x47=0.42;y47=1.26;//A1
+    x48=0.2;y48=1.34;//J1
+    x49=0.14;y49=1.34;//K1
+    x50=-0.15;y50=1.34;//L1
+    x51=0.14;y51=1.14;//M1
+    x52=0.14;y52=1.38;//N1
+    line(x44*sc+xp,-y44*sc+yp,x46*sc+xp,-y46*sc+yp);
+    line(x46*sc+xp,-y46*sc+yp,x47*sc+xp,-y47*sc+yp);
+    line(x47*sc+xp,-y47*sc+yp,x48*sc+xp,-y48*sc+yp);
+    line(x48*sc+xp,-y48*sc+yp,x50*sc+xp,-y50*sc+yp);
+    line(x45*sc+xp,-y45*sc+yp,x51*sc+xp,-y51*sc+yp);
+    line(x51*sc+xp,-y51*sc+yp,x46*sc+xp,-y46*sc+yp);
+    line(x49*sc+xp,-y49*sc+yp,x52*sc+xp,-y52*sc+yp);
+    line(x52*sc+xp,-y52*sc+yp,x48*sc+xp,-y48*sc+yp);
+    
 }   
 void PesawatV2(float xp,float yp,float sc)
 {  
@@ -409,6 +452,42 @@ void Peluru(float xp, float yp, float sc)
     floodfill(2.4*sc+xp,0*sc+yp,WHITE);
     floodfill(0.1*sc+xp,0*sc+yp,WHITE);
 }
+void Roket1(float xp, float yp, float sc)
+{
+    float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
+    float x5,y5,x6,y6,x7,y7,x8,y8;
+    x0=2;y0=0;//A
+    x1=1;y1=0.2;//B
+    x2=-1.5;y2=0.2;//G
+    x3=-1.5;y3=-0.2;//H
+    x4=1;y4=-0.2;//I
+    setcolor(WHITE);
+    setfillstyle(SOLID_FILL, YELLOW);
+    line(x0*sc+xp,y0*sc+yp,x1*sc+xp,y1*sc+yp);
+    line(x1*sc+xp,y1*sc+yp,x2*sc+xp,y2*sc+yp);
+    line(x2*sc+xp,y2*sc+yp,x3*sc+xp,y3*sc+yp);
+    line(x3*sc+xp,y3*sc+yp,x4*sc+xp,y4*sc+yp);
+    line(x0*sc+xp,y0*sc+yp,x4*sc+xp,y4*sc+yp);
+    floodfill(0*sc+xp,0*sc+yp,WHITE);
+}
+void Roket2(float xp, float yp, float sc)
+{
+    float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
+    float x5,y5,x6,y6,x7,y7,x8,y8;
+    x0=2;y0=0;//A
+    x1=1;y1=0.2;//B
+    x2=-1.5;y2=0.2;//G
+    x3=-1.5;y3=-0.2;//H
+    x4=1;y4=-0.2;//I
+    setcolor(WHITE);
+    setfillstyle(SOLID_FILL, YELLOW);
+    line(x0*sc+xp,y0*sc+yp,x1*sc+xp,y1*sc+yp);
+    line(x1*sc+xp,y1*sc+yp,x2*sc+xp,y2*sc+yp);
+    line(x2*sc+xp,y2*sc+yp,x3*sc+xp,y3*sc+yp);
+    line(x3*sc+xp,y3*sc+yp,x4*sc+xp,y4*sc+yp);
+    line(x0*sc+xp,y0*sc+yp,x4*sc+xp,y4*sc+yp);
+    floodfill(0*sc+xp,0*sc+yp,WHITE);
+}
 void gameplay()
 {
     cleardevice();
@@ -419,6 +498,8 @@ void gameplay()
     int scA1,scA2,scA3,scA4,scA5,scA6,scA7,scA8;;
     float xa1,ya1,xa2,ya2,xa3,ya3,xa4,ya4,xa5,ya5,xa6,ya6,xa7,ya7,xa8,ya8;
     float fpeluru[20],xpeluru[20],ypeluru[20];
+    float froket1[5],xroket1[5],yroket1[5];  
+    float froket2[5],xroket2[5],yroket2[5];  
     char skorstr[999];
     int z=0,skor=0;
     int page = 0;
@@ -463,6 +544,11 @@ void gameplay()
     {
         fpeluru[i]=0;
     }
+     for (int i = 0; i < 5; i++)
+    {
+        froket1[i]=0;
+        froket2[i]=0;
+    }
     //Player
     xplayer= 200;
     yplayer= 200;
@@ -472,9 +558,9 @@ void gameplay()
         setactivepage(page);
         setvisualpage(1-page);
         cleardevice();
-        //readimagefile("langit1.jpg",0,0,1400,700);
+        //readimagefile("Assets/langit.jpg",0,0,1400,700);
         PesawatV2(xp1,yp1,20);
-            xp1=xp1-8;
+            xp1=xp1-speed;
             if(xp1<=0)
             {
                 xp1=1500;
@@ -484,7 +570,7 @@ void gameplay()
                 }
             }
         PesawatV2(xp2,yp2,20);
-            xp2=xp2-8;
+            xp2=xp2-speed;
             if(xp2<=0)
             {
                 xp2=1500;
@@ -494,7 +580,7 @@ void gameplay()
                 }
             }
         PesawatV2(xp3,yp3,20);
-            xp3=xp3-8;
+            xp3=xp3-speed;
             if(xp3<=0)
             {
                 xp3=1500;
@@ -504,7 +590,7 @@ void gameplay()
                 }
             }
         PesawatV2(xp4,yp4,20);
-        xp4=xp4-8;
+        xp4=xp4-speed;
         if(xp4<=0)
         {
             xp4=1500;
@@ -635,9 +721,13 @@ void gameplay()
             z=z+3;
             skor=0;
         }
-        if(xp1<=10||xp2<=10||xp3<=10||xp4<=10)
+        if(xp1<=speed+1||xp2<=speed+1||xp3<=speed+1||xp4<=speed+1)
         {
             z=z-3;
+        }
+        if(z<0)
+        {
+            z=0;
         }
         sprintf(skorstr, "---Score = %d---", z);
         setcolor(YELLOW);
@@ -648,19 +738,19 @@ void gameplay()
         //Player
         if( GetAsyncKeyState(68) < 0 )
         {
-            xplayer=xplayer+12;
+            xplayer=xplayer+24;
         }
         if( GetAsyncKeyState(65) < 0 )
         {
-            xplayer=xplayer-12;
+            xplayer=xplayer-24;
         }
         if( GetAsyncKeyState(83) < 0 )
         {
-            yplayer=yplayer+12;
+            yplayer=yplayer+24;
         }
         if( GetAsyncKeyState(87) < 0 )
         {
-            yplayer=yplayer-12;
+            yplayer=yplayer-24;
         }
         
         //Batas atas bawah kanan kiri
@@ -697,11 +787,50 @@ void gameplay()
         for (int i = 0; i < 20; i++) {
             if(fpeluru[i]==1)
             {
-                xpeluru[i]=xpeluru[i]+24;
+                xpeluru[i]=xpeluru[i]+48;
                 Peluru(xpeluru[i],ypeluru[i],2);
                 if (xpeluru[i] > 1500)
                 {
                     fpeluru[i] = 0;
+                }
+            }
+        }
+        if(ismouseclick(WM_RBUTTONDOWN))
+        {
+            for (int i = 0; i < 20; i++) {
+                if (froket1[i] == 0||froket2[i]==0)
+                {
+                    sndPlaySound("Sound/gun.wav",SND_ASYNC);   
+                    froket1[i]=1;
+                    froket2[i]=1;
+                    xroket1[i]=xplayer+(0.36*20);
+                    yroket1[i]=yplayer+(-1.12*20);
+                    xroket2[i]=xplayer+(0.42*20);
+                    yroket2[i]=yplayer+(1.26*20);
+                    clearmouseclick(WM_RBUTTONDOWN);
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            if(froket1[i]==1)
+            {
+                xroket1[i]=xroket1[i]+48;
+                Roket1(xroket1[i],yroket1[i],5);
+                if (xroket1[i] > 1500)
+                {
+                    froket1[i] = 0;
+                }
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            if(froket2[i]==1)
+            {
+                xroket2[i]=xroket2[i]+48;
+                Roket2(xroket2[i],yroket2[i],5);
+                if (xroket2[i] > 1500)
+                {
+                    froket2[i] = 0;
                 }
             }
         }
@@ -711,8 +840,9 @@ void gameplay()
             cleardevice();
             gameover();
         }
+        delay(10);
         page = 1-page;
-        delay(20);
+        
     }
 }
 void gameover()
@@ -765,6 +895,7 @@ void menu()
 	outtextxy(200, 300, "How To Play");
 	outtextxy(280, 350, "About");
 	outtextxy(290, 400, "Exit");
+    section=0;
 	controls_menu();
 }
 void controls_menu()
@@ -795,7 +926,8 @@ void controls_menu()
 							if(cm  == 1)
 							{
                                 sndPlaySound(NULL,0);
-								gameplay();
+                                section=4;
+								level();
                                 break;
 							}
 							else if(cm  == 2)
@@ -943,6 +1075,94 @@ void about_controls()
                 break;
             }
         }
+    }
+}
+void level()
+{
+    sndPlaySound("Sound/main.wav",SND_ASYNC|SND_LOOP);  
+    readimagefile("Assets/MmFPP.jpg",0,0,1400,700);
+	settextstyle(0, HORIZ_DIR, 3);
+    setcolor(15);
+	outtextxy(290, 250, "Easy");
+	outtextxy(270, 300, "Normal");
+	outtextxy(290, 350, "Hard");
+    level_controls();
+}
+void level_controls()
+{
+    int cm =  1;
+	while(1)
+       { 
+			if (section==4)
+            {
+                char put;
+					    put = getch();
+					    if(put == KEY_UP)
+					    {
+					    	if(cm != 1)
+					    	{
+					    		cm = cm-1;
+							}
+						}
+						else if(put == KEY_DOWN)
+						{
+							if(cm != 4)
+					    	{
+					    		cm = cm+1;
+							}
+                        }
+						if(GetAsyncKeyState('\r') < 0 )
+						{
+							if(cm  == 1)
+							{
+                                sndPlaySound(NULL,0);
+                                speed=12;
+								gameplay();
+                                break;
+							}
+							else if(cm  == 2)
+							{
+                                sndPlaySound(NULL,0);
+                                speed=15;
+								gameplay();
+                                break;
+							}
+							else if(cm  == 3)
+							{
+                                sndPlaySound(NULL,0);
+                                speed=18;
+								gameplay();
+                                break;
+							}
+                        }							
+            }     
+        if(cm  == 1)
+    	{		
+				settextstyle(0, HORIZ_DIR, 3);
+				setcolor(1);
+		        outtextxy(290, 250, "Easy");
+				setcolor(15);
+	            outtextxy(270, 300, "Normal");
+	            outtextxy(290, 350, "Hard");
+		}
+		else if(cm  == 2)
+		{
+				settextstyle(0, HORIZ_DIR, 3);
+				outtextxy(290, 250, "Easy");
+				setcolor(1);
+				outtextxy(270, 300, "Normal");
+				setcolor(15);
+				outtextxy(290, 350, "Hard");
+		}
+		else if(cm  == 3)
+		{
+				settextstyle(0, HORIZ_DIR, 3);
+				outtextxy(290, 250, "Easy");
+	            outtextxy(270, 300, "Normal");
+				setcolor(1);
+				outtextxy(290, 350, "Hard");
+				setcolor(15);
+		}
     }
 }
 int main()
