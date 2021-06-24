@@ -6,11 +6,13 @@
 #include <stdio.h>
 #include <conio.h>
 
-void gameover(), loadingscreen(), gameplay(), controls_menu(), menu(), controlsgame(), howtoplay();
+void gameover(int *z), loadingscreen(), gameplay(), controls_menu(), menu(), controlsgame(), howtoplay();
 void controlsgame_controls(), howtoplay_controls(), about(), about_controls();
-void level(), level_controls();
+void level(), level_controls(), win_condition(int *z);
 int section = 0;
 int speed = 0;
+int bgspeed = 1;
+int pause = 1;
 void PesawatV1(float xp,float yp,float sc) 
 { 
     float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
@@ -62,7 +64,7 @@ void PesawatV1(float xp,float yp,float sc)
     x33=3.1;y33=-0.6;//M1
     x34=3.1;y34=-0.7;//N1
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL,GREEN);
+    setfillstyle(SOLID_FILL,LIGHTGRAY);
     line(x0*sc+xp,-y0*sc+yp,x1*sc+xp,-y1*sc+yp);
     line(x1*sc+xp,-y1*sc+yp,x2*sc+xp,-y2*sc+yp);
     line(x2*sc+xp,-y2*sc+yp,x3*sc+xp,-y3*sc+yp);
@@ -90,7 +92,7 @@ void PesawatV1(float xp,float yp,float sc)
     
     //Sayap Samping
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL,GREEN);
+    setfillstyle(SOLID_FILL,LIGHTGRAY);
     line(x19*sc+xp,-y19*sc+yp,x20*sc+xp,-y20*sc+yp);
     line(x20*sc+xp,-y20*sc+yp,x21*sc+xp,-y21*sc+yp);
     line(x21*sc+xp,-y21*sc+yp,x22*sc+xp,-y22*sc+yp);
@@ -121,6 +123,8 @@ void PesawatV1(float xp,float yp,float sc)
     floodfill(1.75*sc+xp,0.65*sc+yp,WHITE);
     floodfill(3.08*sc+xp,0.65*sc+yp,WHITE);
     //roket kanan
+    setcolor(WHITE);
+    setfillstyle(SOLID_FILL, YELLOW);
     x35=-0.21;y35=-1.2;//G1
     x36=0.14;y36=-1.2;//H1
     x37=0.2;y37=-1.2;//I1
@@ -138,6 +142,7 @@ void PesawatV1(float xp,float yp,float sc)
     line(x42*sc+xp,-y42*sc+yp,x37*sc+xp,-y37*sc+yp);
     line(x41*sc+xp,-y41*sc+yp,x43*sc+xp,-y43*sc+yp);
     line(x43*sc+xp,-y43*sc+yp,x39*sc+xp,-y39*sc+yp);
+    floodfill(0.15*sc+xp,1.12*sc+yp,WHITE);
     //roket kiri
     x44=0.06;y44=1.18;//G1
     x45=0.14;y45=1.18;//H1
@@ -156,7 +161,7 @@ void PesawatV1(float xp,float yp,float sc)
     line(x51*sc+xp,-y51*sc+yp,x46*sc+xp,-y46*sc+yp);
     line(x49*sc+xp,-y49*sc+yp,x52*sc+xp,-y52*sc+yp);
     line(x52*sc+xp,-y52*sc+yp,x48*sc+xp,-y48*sc+yp);
-    
+    floodfill(0.2*sc+xp,-1.25*sc+yp,WHITE);
 }   
 void PesawatV2(float xp,float yp,float sc)
 {  
@@ -425,7 +430,7 @@ public:
     }
     void GerakAwan()
     {
-        xp=xp-6;
+        xp=xp-6*bgspeed*pause;
         if(xp<-20)
         {
             xp=1450;
@@ -500,9 +505,10 @@ void gameplay()
     float fpeluru[20],xpeluru[20],ypeluru[20];
     float froket1[5],xroket1[5],yroket1[5];  
     float froket2[5],xroket2[5],yroket2[5];  
-    char skorstr[999];
-    int z=0,skor=0;
-    int page = 0;
+    char skorstr[999],times[99999], nyawa[10];
+    float start;
+    int z=0,skor=0, ny=3;
+    int page = 0, pausescr=0;
     xp1=1800;
     yp1=400;
     xp2=1400;
@@ -544,12 +550,13 @@ void gameplay()
     {
         fpeluru[i]=0;
     }
-     for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
     {
         froket1[i]=0;
         froket2[i]=0;
     }
     //Player
+
     xplayer= 200;
     yplayer= 200;
     //sndPlaySound("Sound/gameplay.wav",SND_ASYNC|SND_LOOP);  
@@ -558,9 +565,20 @@ void gameplay()
         setactivepage(page);
         setvisualpage(1-page);
         cleardevice();
-        //readimagefile("Assets/langit.jpg",0,0,1400,700);
+        //start=time(0);
+        //printf("%f         ", start);
+        printf("%d         ", ny);
+        if((z>50)&&(z<150))
+        {
+            bgspeed=3;
+            readimagefile("Assets/langit.jpg",0,0,1400,700);
+        }
+        if(z>150)
+        {
+            bgspeed=0;
+        }
         PesawatV2(xp1,yp1,20);
-            xp1=xp1-speed;
+            xp1=xp1-speed*bgspeed*pause;
             if(xp1<=0)
             {
                 xp1=1500;
@@ -570,7 +588,7 @@ void gameplay()
                 }
             }
         PesawatV2(xp2,yp2,20);
-            xp2=xp2-speed;
+            xp2=xp2-speed*bgspeed*pause;
             if(xp2<=0)
             {
                 xp2=1500;
@@ -580,7 +598,7 @@ void gameplay()
                 }
             }
         PesawatV2(xp3,yp3,20);
-            xp3=xp3-speed;
+            xp3=xp3-speed*bgspeed*pause;
             if(xp3<=0)
             {
                 xp3=1500;
@@ -590,19 +608,19 @@ void gameplay()
                 }
             }
         PesawatV2(xp4,yp4,20);
-        xp4=xp4-speed;
-        if(xp4<=0)
-        {
-            xp4=1500;
-            yp4=rand()%450;
-            if(yp4<70){
-            yp4=70;
+            xp4=xp4-speed*bgspeed*pause;
+            if(xp4<=0)
+            {
+                xp4=1500;
+                yp4=rand()%450;
+                if(yp4<70){
+                yp4=70;
+                }
             }
-        }
         for(int i=0; i < 20; i++)
         {
             //peluru
-            if((xpeluru[i]>-3*20+xp1)&&(xpeluru[i]<-1.5*20+xp1)&&(ypeluru[i]<0.5*20+yp1)&&(ypeluru[i]>-0.62*20+yp1))
+            if((xpeluru[i]>-3*20+xp1)&&(xpeluru[i]<-1.5*20+xp1)&&(ypeluru[i]<0.7*20+yp1)&&(ypeluru[i]>-0.7*20+yp1)||(xpeluru[i]<0.86*20+xp1)&&(xpeluru[i]>-1.12*20+xp1)&&(ypeluru[i]>-1.8*20+yp1)&&(ypeluru[i]<-0.35*20+yp1)||(xpeluru[i]<1.62*20+xp1)&&(xpeluru[i]>-1.15*20+xp1)&&(ypeluru[i]>0.41*20+yp1)&&(ypeluru[i]<1.66*20+yp1))
             {
                 xp1=1500;
                 yp1=rand()%450;
@@ -612,7 +630,7 @@ void gameplay()
                 fpeluru[i]=0;
                 skor=1;
             }
-            if((xpeluru[i]>-3*20+xp2)&&(xpeluru[i]<-1.5*20+xp2)&&(ypeluru[i]<0.5*20+yp2)&&(ypeluru[i]>-0.62*20+yp2))
+            if((xpeluru[i]>-3*20+xp2)&&(xpeluru[i]<-1.5*20+xp2)&&(ypeluru[i]<0.7*20+yp2)&&(ypeluru[i]>-0.7*20+yp2)||(xpeluru[i]<0.86*20+xp2)&&(xpeluru[i]>-1.12*20+xp2)&&(ypeluru[i]>-1.8*20+yp2)&&(ypeluru[i]<-0.35*20+yp2)||(xpeluru[i]<1.62*20+xp2)&&(xpeluru[i]>-1.15*20+xp2)&&(ypeluru[i]>0.41*20+yp2)&&(ypeluru[i]<1.66*20+yp2))
             {
                 xp2=1500;
                 yp2=rand()%450;
@@ -622,7 +640,7 @@ void gameplay()
                 fpeluru[i]=0;
                 skor=1;
             }
-            if((xpeluru[i]>-3*20+xp3)&&(xpeluru[i]<-1.5*20+xp3)&&(ypeluru[i]<0.5*20+yp3)&&(ypeluru[i]>-0.62*20+yp3))
+            if((xpeluru[i]>-3*20+xp3)&&(xpeluru[i]<-1.5*20+xp3)&&(ypeluru[i]<0.7*20+yp3)&&(ypeluru[i]>-0.7*20+yp3)||(xpeluru[i]<0.86*20+xp3)&&(xpeluru[i]>-1.12*20+xp3)&&(ypeluru[i]>-1.8*20+yp3)&&(ypeluru[i]<-0.35*20+yp3)||(xpeluru[i]<1.62*20+xp3)&&(xpeluru[i]>-1.15*20+xp3)&&(ypeluru[i]>0.41*20+yp3)&&(ypeluru[i]<1.66*20+yp3))
             {
                 xp3=1500;
                 yp3=rand()%450;
@@ -632,7 +650,7 @@ void gameplay()
                 fpeluru[i]=0;
                 skor=1;
             }
-            if((xpeluru[i]>-3*20+xp4)&&(xpeluru[i]<-1.5*20+xp4)&&(ypeluru[i]<0.5*20+yp4)&&(ypeluru[i]>-0.62*20+yp4))
+            if((xpeluru[i]>-3*20+xp4)&&(xpeluru[i]<-1.5*20+xp4)&&(ypeluru[i]<0.7*20+yp4)&&(ypeluru[i]>-0.7*20+yp4)||(xpeluru[i]<0.86*20+xp4)&&(xpeluru[i]>-1.12*20+xp4)&&(ypeluru[i]>-1.8*20+yp4)&&(ypeluru[i]<-0.35*20+yp4)||(xpeluru[i]<1.62*20+xp4)&&(xpeluru[i]>-1.15*20+xp4)&&(ypeluru[i]>0.41*20+yp4)&&(ypeluru[i]<1.66*20+yp4))
             {
                 xp4=1500;
                 yp4=rand()%450;
@@ -643,61 +661,265 @@ void gameplay()
                 skor=1;
             }
         }
+        for(int i=0; i < 5; i++)
+        {
+            //roket1
+            if((xroket1[i]>-3*20+xp1)&&(xroket1[i]<-1.5*20+xp1)&&(yroket1[i]<0.7*20+yp1)&&(yroket1[i]>-0.7*20+yp1)||(xroket1[i]>-0.86*20+xp1)&&(xroket1[i]<1.12*20+xp1)&&(yroket1[i]<1.8*20+yp1)&&(yroket1[i]>0.35*20+yp1)||(xroket1[i]<1.62*20+xp1)&&(xroket1[i]>-1.15*20+xp1)&&(yroket1[i]>0.41*20+yp1)&&(yroket1[i]<1.66*20+yp1))
+            {
+                xp1=1500;
+                yp1=rand()%450;
+                if(yp1<70){
+                    yp1=70;
+                }
+                froket1[i]=0;
+                skor=2;
+            }
+            if((xroket1[i]>-3*20+xp2)&&(xroket1[i]<-1.5*20+xp2)&&(yroket1[i]<0.7*20+yp2)&&(yroket1[i]>-0.7*20+yp2)||(xroket1[i]>-0.86*20+xp2)&&(xroket1[i]<1.12*20+xp2)&&(yroket1[i]<1.8*20+yp2)&&(yroket1[i]>0.35*20+yp2)||(xroket1[i]<1.62*20+xp2)&&(xroket1[i]>-1.15*20+xp2)&&(yroket1[i]>0.41*20+yp2)&&(yroket1[i]<1.66*20+yp2))
+            {
+                xp2=1500;
+                yp2=rand()%450;
+                if(yp2<70){
+                    yp2=70;
+                }
+                froket1[i]=0;
+                skor=2;
+            }
+            if((xroket1[i]>-3*20+xp3)&&(xroket1[i]<-1.5*20+xp3)&&(yroket1[i]<0.7*20+yp3)&&(yroket1[i]>-0.7*20+yp3)||(xroket1[i]>-0.86*20+xp3)&&(xroket1[i]<1.12*20+xp3)&&(yroket1[i]<1.8*20+yp3)&&(yroket1[i]>0.35*20+yp3)||(xroket1[i]<1.62*20+xp3)&&(xroket1[i]>-1.15*20+xp3)&&(yroket1[i]>0.41*20+yp3)&&(yroket1[i]<1.66*20+yp3))
+            {
+                xp3=1500;
+                yp3=rand()%450;
+                if(yp3<70){
+                    yp3=70;
+                }
+                froket1[i]=0;
+                skor=2;
+            }
+            if((xroket1[i]>-3*20+xp4)&&(xroket1[i]<-1.5*20+xp4)&&(yroket1[i]<0.7*20+yp4)&&(yroket1[i]>-0.7*20+yp4)||(xroket1[i]>-0.86*20+xp4)&&(xroket1[i]<1.12*20+xp4)&&(yroket1[i]<1.8*20+yp4)&&(yroket1[i]>0.35*20+yp4)||(xroket1[i]<1.62*20+xp4)&&(xroket1[i]>-1.15*20+xp4)&&(yroket1[i]>0.41*20+yp4)&&(yroket1[i]<1.66*20+yp4))
+            {
+                xp4=1500;
+                yp4=rand()%450;
+                if(yp4<70){
+                    yp4=70;
+                }
+                froket1[i]=0;
+                skor=2;
+            }
+             //roket2
+            if((xroket2[i]>-3*20+xp1)&&(xroket2[i]<-1.5*20+xp1)&&(yroket2[i]<0.7*20+yp1)&&(yroket2[i]>-0.7*20+yp1)||(xroket2[i]>-0.86*20+xp1)&&(xroket2[i]<1.12*20+xp1)&&(yroket2[i]<1.8*20+yp1)&&(yroket2[i]>0.35*20+yp1)||(xroket2[i]<1.62*20+xp1)&&(xroket2[i]>-1.15*20+xp1)&&(yroket2[i]>0.41*20+yp1)&&(yroket2[i]<1.66*20+yp1))
+            {
+                xp1=1500;
+                yp1=rand()%450;
+                if(yp1<70){
+                    yp1=70;
+                }
+                froket2[i]=0;
+                skor=2;
+            }
+            if((xroket2[i]>-3*20+xp2)&&(xroket2[i]<-1.5*20+xp2)&&(yroket2[i]<0.7*20+yp2)&&(yroket2[i]>-0.7*20+yp2)||(xroket2[i]>-0.86*20+xp2)&&(xroket2[i]<1.12*20+xp2)&&(yroket2[i]<1.8*20+yp2)&&(yroket2[i]>0.35*20+yp2)||(xroket2[i]<1.62*20+xp2)&&(xroket2[i]>-1.15*20+xp2)&&(yroket2[i]>0.41*20+yp2)&&(yroket2[i]<1.66*20+yp2))
+            {
+                xp2=1500;
+                yp2=rand()%450;
+                if(yp2<70){
+                    yp2=70;
+                }
+                froket2[i]=0;
+                skor=2;
+            }
+            if((xroket2[i]>-3*20+xp3)&&(xroket2[i]<-1.5*20+xp3)&&(yroket2[i]<0.7*20+yp3)&&(yroket2[i]>-0.7*20+yp3)||(xroket2[i]>-0.86*20+xp3)&&(xroket2[i]<1.12*20+xp3)&&(yroket2[i]<1.8*20+yp3)&&(yroket2[i]>0.35*20+yp3)||(xroket2[i]<1.62*20+xp3)&&(xroket2[i]>-1.15*20+xp3)&&(yroket2[i]>0.41*20+yp3)&&(yroket2[i]<1.66*20+yp3))
+            {
+                xp3=1500;
+                yp3=rand()%450;
+                if(yp3<70){
+                    yp3=70;
+                }
+                froket2[i]=0;
+                skor=2;
+            }
+            if((xroket2[i]>-3*20+xp4)&&(xroket2[i]<-1.5*20+xp4)&&(yroket2[i]<0.7*20+yp4)&&(yroket2[i]>-0.7*20+yp4)||(xroket2[i]>-0.86*20+xp4)&&(xroket2[i]<1.12*20+xp4)&&(yroket2[i]<1.8*20+yp4)&&(yroket2[i]>0.35*20+yp4)||(xroket2[i]<1.62*20+xp4)&&(xroket2[i]>-1.15*20+xp4)&&(yroket2[i]>0.41*20+yp4)&&(yroket2[i]<1.66*20+yp4))
+            {
+                xp4=1500;
+                yp4=rand()%450;
+                if(yp4<70){
+                    yp4=70;
+                }
+                froket2[i]=0;
+                skor=2;
+            }
+        }
+        //Tabrakan
+        if((3.16*20+xplayer>-3*20+xp1)&&(3.16*20+xplayer<-1.5*20+xp1)&&(0.01*20+yplayer<0.7*20+yp1)&&(0.01*20+yplayer>-0.7*20+yp1)||(3.16*20+xplayer<0.86*20+xp1)&&(3.16*20+xplayer>-1.12*20+xp1)&&(0.01*20+yplayer>-1.8*20+yp1)&&(0.01*20+yplayer<-0.35*20+yp1)||(3.16*20+xplayer<1.62*20+xp1)&&(3.16*20+xplayer>-1.15*20+xp1)&&(0.01*20+yplayer>0.41*20+yp1)&&(0.01*20+yplayer<1.66*20+yp1))
+        {
+            xp1=1500;
+            yp1=rand()%450;
+            if(yp1<70){
+                yp1=70;
+            }
+            ny=ny-1;
+        }
+        if((3.16*20+xplayer>-3*20+xp2)&&(3.16*20+xplayer<-1.5*20+xp2)&&(0.01*20+yplayer<0.7*20+yp2)&&(0.01*20+yplayer>-0.7*20+yp2)||(3.16*20+xplayer<0.86*20+xp2)&&(3.16*20+xplayer>-1.12*20+xp2)&&(0.01*20+yplayer>-1.8*20+yp2)&&(0.01*20+yplayer<-0.35*20+yp2)||(3.16*20+xplayer<1.62*20+xp2)&&(3.16*20+xplayer>-1.15*20+xp2)&&(0.01*20+yplayer>0.41*20+yp2)&&(0.01*20+yplayer<1.66*20+yp2))
+        {
+            xp2=1500;
+            yp2=rand()%450;
+            if(yp2<70){
+                yp2=70;
+            }
+            ny=ny-1;
+        }
+        if((3.16*20+xplayer>-3*20+xp3)&&(3.16*20+xplayer<-1.5*20+xp3)&&(0.01*20+yplayer<0.7*20+yp3)&&(0.01*20+yplayer>-0.7*20+yp3)||(3.16*20+xplayer<0.86*20+xp3)&&(3.16*20+xplayer>-1.12*20+xp3)&&(0.01*20+yplayer>-1.8*20+yp3)&&(0.01*20+yplayer<-0.35*20+yp3)||(3.16*20+xplayer<1.62*20+xp3)&&(3.16*20+xplayer>-1.15*20+xp3)&&(0.01*20+yplayer>0.41*20+yp3)&&(0.01*20+yplayer<1.66*20+yp3))
+        {
+            xp3=1500;
+            yp3=rand()%450;
+            if(yp3<70){
+                yp3=70;
+            }
+            ny=ny-1;
+        }
+        if((3.16*20+xplayer>-3*20+xp4)&&(3.16*20+xplayer<-1.5*20+xp4)&&(0.01*20+yplayer<0.7*20+yp4)&&(0.01*20+yplayer>-0.7*20+yp4)||(3.16*20+xplayer<0.86*20+xp4)&&(3.16*20+xplayer>-1.12*20+xp4)&&(0.01*20+yplayer>-1.8*20+yp4)&&(0.01*20+yplayer<-0.35*20+yp4)||(3.16*20+xplayer<1.62*20+xp4)&&(3.16*20+xplayer>-1.15*20+xp4)&&(0.01*20+yplayer>0.41*20+yp4)&&(0.01*20+yplayer<1.66*20+yp4))
+        {
+            xp4=1500;
+            yp4=rand()%450;
+            if(yp4<70){
+                yp4=70;
+            }
+            ny=ny-1;
+        }
+        //Tabrakan
+        if((-1.04*20+xplayer>-3*20+xp1)&&(-1.04*20+xplayer<-1.5*20+xp1)&&(1.33*20+yplayer<0.7*20+yp1)&&(1.33*20+yplayer>-0.7*20+yp1)||(-1.04*20+xplayer<0.86*20+xp1)&&(-1.04*20+xplayer>-1.12*20+xp1)&&(1.33*20+yplayer>-1.8*20+yp1)&&(1.33*20+yplayer<-0.35*20+yp1)||(-1.04*20+xplayer<1.62*20+xp1)&&(-1.04*20+xplayer>-1.15*20+xp1)&&(1.33*20+yplayer>0.41*20+yp1)&&(1.33*20+yplayer<1.66*20+yp1))
+        {
+            xp1=1500;
+            yp1=rand()%450;
+            if(yp1<70){
+                yp1=70;
+            }
+            ny=ny-1;
+        }
+        if((-1.04*20+xplayer>-3*20+xp2)&&(-1.04*20+xplayer<-1.5*20+xp2)&&(1.33*20+yplayer<0.7*20+yp2)&&(1.33*20+yplayer>-0.7*20+yp2)||(-1.04*20+xplayer<0.86*20+xp2)&&(-1.04*20+xplayer>-1.12*20+xp2)&&(1.33*20+yplayer>-1.8*20+yp2)&&(1.33*20+yplayer<-0.35*20+yp2)||(-1.04*20+xplayer<1.62*20+xp2)&&(-1.04*20+xplayer>-1.15*20+xp2)&&(1.33*20+yplayer>0.41*20+yp2)&&(1.33*20+yplayer<1.66*20+yp2))
+        {
+            xp2=1500;
+            yp2=rand()%450;
+            if(yp2<70){
+                yp2=70;
+            }
+            ny=ny-1;
+        }
+        if((-1.04*20+xplayer>-3*20+xp3)&&(-1.04*20+xplayer<-1.5*20+xp3)&&(1.33*20+yplayer<0.7*20+yp3)&&(1.33*20+yplayer>-0.7*20+yp3)||(-1.04*20+xplayer<0.86*20+xp3)&&(-1.04*20+xplayer>-1.12*20+xp3)&&(1.33*20+yplayer>-1.8*20+yp3)&&(1.33*20+yplayer<-0.35*20+yp3)||(-1.04*20+xplayer<1.62*20+xp3)&&(-1.04*20+xplayer>-1.15*20+xp3)&&(1.33*20+yplayer>0.41*20+yp3)&&(1.33*20+yplayer<1.66*20+yp3))
+        {
+            xp3=1500;
+            yp3=rand()%450;
+            if(yp3<70){
+                yp3=70;
+            }
+            ny=ny-1;
+        }
+        if((-1.04*20+xplayer>-3*20+xp4)&&(-1.04*20+xplayer<-1.5*20+xp4)&&(1.33*20+yplayer<0.7*20+yp4)&&(1.33*20+yplayer>-0.7*20+yp4)||(-1.04*20+xplayer<0.86*20+xp4)&&(-1.04*20+xplayer>-1.12*20+xp4)&&(1.33*20+yplayer>-1.8*20+yp4)&&(1.33*20+yplayer<-0.35*20+yp4)||(-1.04*20+xplayer<1.62*20+xp4)&&(-1.04*20+xplayer>-1.15*20+xp4)&&(1.33*20+yplayer>0.41*20+yp4)&&(1.33*20+yplayer<1.66*20+yp4))
+        {
+            xp4=1500;
+            yp4=rand()%450;
+            if(yp4<70){
+                yp4=70;
+            }
+            ny=ny-1;
+        }
+        //Tabrakan
+        if((-0.74*20+xplayer>-3*20+xp1)&&(-0.74*20+xplayer<-1.5*20+xp1)&&(-1.52*20+yplayer<0.7*20+yp1)&&(-1.52*20+yplayer>-0.7*20+yp1)||(-0.74*20+xplayer<0.86*20+xp1)&&(-0.74*20+xplayer>-1.12*20+xp1)&&(-1.52*20+yplayer>-1.8*20+yp1)&&(-1.52*20+yplayer<-0.35*20+yp1)||(-0.74*20+xplayer<1.62*20+xp1)&&(-0.74*20+xplayer>-1.15*20+xp1)&&(-1.52*20+yplayer>0.41*20+yp1)&&(-1.52*20+yplayer<1.66*20+yp1))
+        {
+            xp1=1500;
+            yp1=rand()%450;
+            if(yp1<70){
+                yp1=70;
+            }
+            ny=ny-1;
+        }
+        if((-0.74*20+xplayer>-3*20+xp2)&&(-0.74*20+xplayer<-1.5*20+xp2)&&(-1.52*20+yplayer<0.7*20+yp2)&&(-1.52*20+yplayer>-0.7*20+yp2)||(-0.74*20+xplayer<0.86*20+xp2)&&(-0.74*20+xplayer>-1.12*20+xp2)&&(-1.52*20+yplayer>-1.8*20+yp2)&&(-1.52*20+yplayer<-0.35*20+yp2)||(-0.74*20+xplayer<1.62*20+xp2)&&(-0.74*20+xplayer>-1.15*20+xp2)&&(-1.52*20+yplayer>0.41*20+yp2)&&(-1.52*20+yplayer<1.66*20+yp2))
+        {
+            xp2=1500;
+            yp2=rand()%450;
+            if(yp2<70){
+                yp2=70;
+            }
+            ny=ny-1;
+        }
+        if((-0.74*20+xplayer>-3*20+xp3)&&(-0.74*20+xplayer<-1.5*20+xp3)&&(-1.52*20+yplayer<0.7*20+yp3)&&(-1.52*20+yplayer>-0.7*20+yp3)||(-0.74*20+xplayer<0.86*20+xp3)&&(-0.74*20+xplayer>-1.12*20+xp3)&&(-1.52*20+yplayer>-1.8*20+yp3)&&(-1.52*20+yplayer<-0.35*20+yp3)||(-0.74*20+xplayer<1.62*20+xp3)&&(-0.74*20+xplayer>-1.15*20+xp3)&&(-1.52*20+yplayer>0.41*20+yp3)&&(-1.52*20+yplayer<1.66*20+yp3))
+        {
+            xp3=1500;
+            yp3=rand()%450;
+            if(yp3<70){
+                yp3=70;
+            }
+            ny=ny-1;
+        }
+        if((-0.74*20+xplayer>-3*20+xp4)&&(-0.74*20+xplayer<-1.5*20+xp4)&&(-1.52*20+yplayer<0.7*20+yp4)&&(-1.52*20+yplayer>-0.7*20+yp4)||(-0.74*20+xplayer<0.86*20+xp4)&&(-0.74*20+xplayer>-1.12*20+xp4)&&(-1.52*20+yplayer>-1.8*20+yp4)&&(-1.52*20+yplayer<-0.35*20+yp4)||(-0.74*20+xplayer<1.62*20+xp4)&&(-0.74*20+xplayer>-1.15*20+xp4)&&(-1.52*20+yplayer>0.41*20+yp4)&&(-1.52*20+yplayer<1.66*20+yp4))
+        {
+            xp4=1500;
+            yp4=rand()%450;
+            if(yp4<70){
+                yp4=70;
+            }
+            ny=ny-1;
+        }
+        if(ny<=0)
+        {
+            cleardevice();
+            page=page-1;
+            gameover(&z);
+            break;
+        }
+                
         Gedung1(xg1,yg1,20);
-        xg1=xg1-6;
+        xg1=xg1-12*bgspeed*pause;
         if(xg1<-400)
         {
             xg1=1500;
         }
         Gedung2(xg2,yg2,20);
-        xg2=xg2-6;
+        xg2=xg2-12*bgspeed*pause;
         if(xg2<-200)
         {
             xg2=1500;
         }
         Gedung2(xg3,yg3,20);
-        xg3=xg3-6;
+        xg3=xg3-12*bgspeed*pause;
         if(xg3<-400)
         {
             xg3=1500;
         }
         Gedung3(xg4,yg4,20);
-        xg4=xg4-6;
+        xg4=xg4-12*bgspeed*pause;
         if(xg4<-400)
         {
             xg4=1500;
         }
         Gedung4(xg5,yg5,20);
-        xg5=xg5-6;
+        xg5=xg5-6*bgspeed*pause;
         if(xg5<-200)
         {
             xg5=1500;
         }
         Gedung4(xg6,yg6,20);
-        xg6=xg6-6;
+        xg6=xg6-12*bgspeed*pause;
         if(xg6<-400)
         {
             xg6=1500;
         }
         Gedung2(xg7,yg7,20);
-        xg7=xg7-6;
+        xg7=xg7-12*bgspeed*pause;
         if(xg7<-400)
         {
             xg7=1500;
         }
         Gedung2(xg8,yg8,20);
-        xg8=xg8-6;
+        xg8=xg8-12*bgspeed*pause;
         if(xg8<-400)
         {
             xg8=1500;
         }
         Gedung3(xg9,yg9,20);
-        xg9=xg9-6;
+        xg9=xg9-12*bgspeed*pause;
         if(xg9<-400)
         {
             xg9=1500;
         }
-        xplayer=xplayer-6;
+        xplayer=xplayer-6*bgspeed*pause;
         PesawatV1(xplayer,yplayer,20);
         a1.DrawAwan();
         a1.GerakAwan();
@@ -721,6 +943,11 @@ void gameplay()
             z=z+3;
             skor=0;
         }
+        if(skor==2)
+        {
+            z=z+10;
+            skor=0;
+        }
         if(xp1<=speed+1||xp2<=speed+1||xp3<=speed+1||xp4<=speed+1)
         {
             z=z-3;
@@ -730,27 +957,29 @@ void gameplay()
             z=0;
         }
         sprintf(skorstr, "---Score = %d---", z);
+        sprintf(nyawa, "Player Life = %d---", ny);
         setcolor(YELLOW);
         settextstyle(8,0,1);
         outtextxy(650,10, skorstr);
-        outtextxy(200,10, "Player");
+        outtextxy(200,10, nyawa);
         
         //Player
+        yplayer=yplayer+6*bgspeed*pause;
         if( GetAsyncKeyState(68) < 0 )
         {
-            xplayer=xplayer+24;
+            xplayer=xplayer+24*bgspeed*pause;
         }
         if( GetAsyncKeyState(65) < 0 )
         {
-            xplayer=xplayer-24;
+            xplayer=xplayer-24*bgspeed*pause;
         }
         if( GetAsyncKeyState(83) < 0 )
         {
-            yplayer=yplayer+24;
+            yplayer=yplayer+6*bgspeed*pause;
         }
         if( GetAsyncKeyState(87) < 0 )
         {
-            yplayer=yplayer-24;
+            yplayer=yplayer-18*bgspeed*pause;
         }
         
         //Batas atas bawah kanan kiri
@@ -787,7 +1016,7 @@ void gameplay()
         for (int i = 0; i < 20; i++) {
             if(fpeluru[i]==1)
             {
-                xpeluru[i]=xpeluru[i]+48;
+                xpeluru[i]=xpeluru[i]+48*pause;
                 Peluru(xpeluru[i],ypeluru[i],2);
                 if (xpeluru[i] > 1500)
                 {
@@ -800,7 +1029,7 @@ void gameplay()
             for (int i = 0; i < 20; i++) {
                 if (froket1[i] == 0||froket2[i]==0)
                 {
-                    sndPlaySound("Sound/gun.wav",SND_ASYNC);   
+                    sndPlaySound("Sound/rocket.wav",SND_ASYNC);   
                     froket1[i]=1;
                     froket2[i]=1;
                     xroket1[i]=xplayer+(0.36*20);
@@ -815,7 +1044,7 @@ void gameplay()
         for (int i = 0; i < 5; i++) {
             if(froket1[i]==1)
             {
-                xroket1[i]=xroket1[i]+48;
+                xroket1[i]=xroket1[i]+48*pause;
                 Roket1(xroket1[i],yroket1[i],5);
                 if (xroket1[i] > 1500)
                 {
@@ -826,7 +1055,7 @@ void gameplay()
         for (int i = 0; i < 5; i++) {
             if(froket2[i]==1)
             {
-                xroket2[i]=xroket2[i]+48;
+                xroket2[i]=xroket2[i]+48*pause;
                 Roket2(xroket2[i],yroket2[i],5);
                 if (xroket2[i] > 1500)
                 {
@@ -835,38 +1064,110 @@ void gameplay()
             }
         }
         if( GetAsyncKeyState(27) < 0 )
-        {   
-            page=1-page;
-            cleardevice();
-            gameover();
+        {
+            pause=0;
+            pausescr=1;
         }
-        delay(10);
+        if(pausescr==1)
+        {
+            setcolor(BLUE);
+            outtextxy(600, 300, "GAME PAUSED");
+            outtextxy(540, 350, "Press [Space] to Main Menu");
+            outtextxy(560, 400, "Press [Enter] to Return");
+            section=5;
+        }
+        if (section==5)
+        {
+             if( GetAsyncKeyState('\r') < 0 )
+             {
+                 pause=1;
+                 pausescr=0;
+                 section=0;
+             }
+             if( GetAsyncKeyState(' ') < 0 )
+             {
+                 pause=1;
+                 pausescr=0;
+                 section=0;
+                 cleardevice();
+                 page=page-1;
+                 menu();
+                 break;
+             }
+        }
+        if(z > 10)
+        { 
+            cleardevice();
+            page=page-1;
+            win_condition(&z);
+            break;
+        }
+        delay(1);
         page = 1-page;
         
     }
 }
-void gameover()
+void win_condition(int *z)
 {
     cleardevice();
-    int section;
     int page=0;
+    char skor[9999];
     setactivepage(page);
 	setvisualpage(page);
 	while(1)
 	{
-    setcolor(RED);
-    settextstyle(0, HORIZ_DIR, 3);
-    outtextxy(600, 300, "GAME OVER");
-    setcolor(WHITE);
-	settextstyle(0, HORIZ_DIR, 3);
-	outtextxy(400, 350, "Press [Enter] to Main Menu");
-    if( GetAsyncKeyState('\r') < 0 )
-		{
-			cleardevice();	
-			menu();	
-            break;
-        }
+        setactivepage(page);
+        setvisualpage(page);
+        setcolor(BLUE);
+        readimagefile("Assets/GoFPP.jpg",0,0,1400,700);
+        settextstyle(0, HORIZ_DIR, 3);
+        sprintf(skor, "Your Final Score = %d", *z);
+        outtextxy(290, 250, "YOU WIN");
+        outtextxy(150, 300, skor);
+        setcolor(WHITE);
+        settextstyle(0, HORIZ_DIR, 3);
+        outtextxy(250, 350, "Press [Enter]"); 
+        outtextxy(250, 400, "to Main Menu");
+        if( GetAsyncKeyState('\r') < 0 )
+            {
+                cleardevice();	
+                menu();	
+                break;
+            }
     }
+    page=1-page;
+    delay(1);
+}
+void gameover(int *z)
+{
+    cleardevice();
+    int page=0;
+    char skor[9999];
+    setactivepage(page);
+	setvisualpage(page);
+	while(1)
+	{
+        setactivepage(page);
+        setvisualpage(page);
+        setcolor(BLUE);
+        readimagefile("Assets/GoFPP.jpg",0,0,1400,700);
+        settextstyle(0, HORIZ_DIR, 3);
+        sprintf(skor, "Your Score = %d", *z);
+        outtextxy(250, 250, "GAME OVER");
+        outtextxy(180, 300, skor);
+        setcolor(WHITE);
+        settextstyle(0, HORIZ_DIR, 3);
+        outtextxy(220, 350, "Press [Enter]"); 
+        outtextxy(220, 400, "to Main Menu");
+        if( GetAsyncKeyState('\r') < 0 )
+            {
+                cleardevice();	
+                menu();	
+                break;
+            }
+    }
+    page=1-page;
+    delay(1);
 }
 void loadingscreen()
 {
@@ -878,7 +1179,7 @@ void loadingscreen()
     {
         setcolor(4);
         rectangle(200+460,180+150,200+460+i, 190+150 );
-        delay(50);
+        delay(10);
     }
     cleardevice();
     return menu();
@@ -887,6 +1188,9 @@ void menu()
 {
 	//settextstyle(10, HORIZ_DIR, 5);
 	//outtextxy(500, 100, "Fighter Pyscho Pilot")
+    int page=0;
+    setactivepage(page);
+    setvisualpage(page);
     sndPlaySound("Sound/main.wav",SND_ASYNC|SND_LOOP);  
     readimagefile("Assets/MmFPP.jpg",0,0,1400,700);
 	settextstyle(0, HORIZ_DIR, 3);
@@ -1123,7 +1427,7 @@ void level_controls()
 							else if(cm  == 2)
 							{
                                 sndPlaySound(NULL,0);
-                                speed=15;
+                                speed=16;
 								gameplay();
                                 break;
 							}
