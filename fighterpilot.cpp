@@ -13,6 +13,8 @@ int section = 0;
 int speed = 0;
 int bgspeed = 1;
 int pause = 1;
+int menang = 1;
+int sm=0;
 void PesawatV1(float xp,float yp,float sc) 
 { 
     float x0,y0,x1,y1,x2,y2,x3,y3,x4,y4;
@@ -64,7 +66,7 @@ void PesawatV1(float xp,float yp,float sc)
     x33=3.1;y33=-0.6;//M1
     x34=3.1;y34=-0.7;//N1
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL,LIGHTGRAY);
+    setfillstyle(SOLID_FILL,DARKGRAY);
     line(x0*sc+xp,-y0*sc+yp,x1*sc+xp,-y1*sc+yp);
     line(x1*sc+xp,-y1*sc+yp,x2*sc+xp,-y2*sc+yp);
     line(x2*sc+xp,-y2*sc+yp,x3*sc+xp,-y3*sc+yp);
@@ -92,13 +94,14 @@ void PesawatV1(float xp,float yp,float sc)
     
     //Sayap Samping
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL,LIGHTGRAY);
+    setfillstyle(SOLID_FILL,DARKGRAY);
     line(x19*sc+xp,-y19*sc+yp,x20*sc+xp,-y20*sc+yp);
     line(x20*sc+xp,-y20*sc+yp,x21*sc+xp,-y21*sc+yp);
     line(x21*sc+xp,-y21*sc+yp,x22*sc+xp,-y22*sc+yp);
     line(x21*sc+xp,-y21*sc+yp,x23*sc+xp,-y23*sc+yp);
-    floodfill(-1.09*sc+xp,-1.48*sc+yp, WHITE);
     floodfill(-0.84*sc+xp,-0.4*sc+yp, WHITE);
+    setfillstyle(CLOSE_DOT_FILL,LIGHTGRAY);
+    floodfill(-1.09*sc+xp,-1.48*sc+yp, WHITE);
     floodfill(0.86*sc+xp,-0.44*sc+yp, WHITE);
     //Kaca
     setcolor(WHITE);
@@ -162,6 +165,12 @@ void PesawatV1(float xp,float yp,float sc)
     line(x49*sc+xp,-y49*sc+yp,x52*sc+xp,-y52*sc+yp);
     line(x52*sc+xp,-y52*sc+yp,x48*sc+xp,-y48*sc+yp);
     floodfill(0.2*sc+xp,-1.25*sc+yp,WHITE);
+    setfillstyle(INTERLEAVE_FILL,BLUE);
+    line(-3.47*sc+xp,-0.75*sc+yp,-2.68*sc+xp,-0.73*sc+yp);
+    floodfill(-3.11*sc+xp,-0.77*sc+yp,WHITE);
+    setfillstyle(CLOSE_DOT_FILL,LIGHTGRAY);
+    line(-0.64*sc+xp,0.3*sc+yp,1.15*sc+xp,0.41*sc+yp);
+    floodfill(0*sc+xp,0.5*sc+yp,WHITE);
 }   
 void PesawatV2(float xp,float yp,float sc)
 {  
@@ -242,7 +251,37 @@ void PesawatV2(float xp,float yp,float sc)
     line(-x24*sc+xp,-y24*sc+yp,-x25*sc+xp,-y25*sc+yp);
     line(-x25*sc+xp,-y25*sc+yp,-x26*sc+xp,-y26*sc+yp);
     line(-x15*sc+xp,-y15*sc+yp,-x26*sc+xp,-y26*sc+yp);
-    floodfill(-2.5*sc+xp,-0.4*sc+yp,WHITE);    
+    floodfill(-2.5*sc+xp,-0.4*sc+yp,WHITE);
+    setcolor(WHITE);
+    setfillstyle(SOLID_FILL,WHITE);
+    line(-1.2*sc+xp,-0.2*sc+yp,-1.4*sc+xp,-0.2*sc+yp);
+    line(-1.4*sc+xp,-0.2*sc+yp,-1.4*sc+xp,0*sc+yp);
+    line(-1.4*sc+xp,0*sc+yp,-1.2*sc+xp,0*sc+yp);
+    line(-1.2*sc+xp,0*sc+yp,-1.2*sc+xp,-0.2*sc+yp);
+    floodfill(-1.3*sc+xp,-0.1*sc+yp,WHITE);
+    line(-0.7*sc+xp,-0.2*sc+yp,-0.9*sc+xp,-0.2*sc+yp);
+    line(-0.9*sc+xp,-0.2*sc+yp,-0.9*sc+xp,0*sc+yp);
+    line(-0.9*sc+xp,0*sc+yp,-0.7*sc+xp,-0*sc+yp);
+    line(-0.7*sc+xp,0*sc+yp,-0.7*sc+xp,-0.2*sc+yp);
+    floodfill(-0.8*sc+xp,-0.1*sc+yp,WHITE);
+    line(-0.2*sc+xp,-0.2*sc+yp,-0.4*sc+xp,-0.2*sc+yp);
+    line(-0.4*sc+xp,-0.2*sc+yp,-0.4*sc+xp,0*sc+yp);
+    line(-0.4*sc+xp,0*sc+yp,-0.2*sc+xp,-0*sc+yp);
+    line(-0.2*sc+xp,0*sc+yp,-0.2*sc+xp,-0.2*sc+yp);
+    floodfill(-0.3*sc+xp,-0.1*sc+yp,WHITE);
+    line(0.8*sc+xp,-0.2*sc+yp,0.6*sc+xp,-0.2*sc+yp);
+    line(0.6*sc+xp,-0.2*sc+yp,0.6*sc+xp,0*sc+yp);
+    line(0.6*sc+xp,0*sc+yp,0.8*sc+xp,-0*sc+yp);
+    line(0.8*sc+xp,0*sc+yp,0.8*sc+xp,-0.2*sc+yp);
+    floodfill(0.7*sc+xp, -0.1*sc+yp,WHITE);
+    line(0.3*sc+xp,-0.2*sc+yp,0.1*sc+xp,-0.2*sc+yp);
+    line(0.1*sc+xp,-0.2*sc+yp,0.1*sc+xp,0*sc+yp);
+    line(0.1*sc+xp,0*sc+yp,0.3*sc+xp,-0*sc+yp);
+    line(0.3*sc+xp,0*sc+yp,0.3*sc+xp,-0.2*sc+yp);
+    floodfill(0.2*sc+xp, -0.1*sc+yp,WHITE);
+    line(2.2*sc+xp,0.2*sc+yp,2*sc+xp,0.2*sc+yp);
+    line(2*sc+xp,0.2*sc+yp,2*sc+xp,0.5*sc+yp);
+    line(2.2*sc+xp,0.2*sc+yp,2.2*sc+xp,0.5*sc+yp);
 }
 void Gedung1(float xp, float yp, float sc)
 {
@@ -262,7 +301,7 @@ void Gedung1(float xp, float yp, float sc)
     x9=8.6;y9=6.2;//L
     x10=9;y10=5.6;//M
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL, DARKGRAY);//BAWAH
+    setfillstyle(LTSLASH_FILL, DARKGRAY);//BAWAH
     line(x0*sc+xp,-y0*sc+yp,x1*sc+xp,-y1*sc+yp);
     line(x2*sc+xp,-y2*sc+yp,x3*sc+xp,-y3*sc+yp);
     line(x2*sc+xp,-y2*sc+yp,x0*sc+xp,-y0*sc+yp);
@@ -277,7 +316,7 @@ void Gedung1(float xp, float yp, float sc)
     floodfill(7.1*sc+xp,-4.917*sc+yp,WHITE);
     floodfill(6.82*sc+xp,-4.917*sc+yp,WHITE);
     floodfill(4.61*sc+xp,-4.917*sc+yp,WHITE);
-    setfillstyle(SOLID_FILL, DARKGRAY);//Atas
+    setfillstyle(CLOSE_DOT_FILL, DARKGRAY);//Atas
     floodfill(7.1*sc+xp,-6.2*sc+yp,WHITE);
     floodfill(8.85*sc+xp,-5.7*sc+yp,WHITE);
     floodfill(6.99*sc+xp,-6.44*sc+yp,WHITE);
@@ -302,7 +341,7 @@ void Gedung2(float xp, float yp, float sc)
     x10=13;y11=9.2;//V
     x11=13;y11=10;//W
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL, DARKGRAY);
+    setfillstyle(CLOSE_DOT_FILL, DARKGRAY);
     line(x0*sc+xp,-y0*sc+yp,x1*sc+xp,-y1*sc+yp);
     line(x1*sc+xp,-y1*sc+yp,x2*sc+xp,-y2*sc+yp);
     line(x2*sc+xp,-y2*sc+yp,x3*sc+xp,-y3*sc+yp);
@@ -341,7 +380,7 @@ void Gedung3(float xp, float yp, float sc)
     x12=17;y12=5.6;//L1
     x13=17.2;y13=5.14;//M1
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL, DARKGRAY);
+    setfillstyle(CLOSE_DOT_FILL, DARKGRAY);
     line(x0*sc+xp,-y0*sc+yp,x1*sc+xp,-y1*sc+yp);
     line(x1*sc+xp,-y1*sc+yp,x2*sc+xp,-y2*sc+yp);
     line(x2*sc+xp,-y2*sc+yp,x3*sc+xp,-y3*sc+yp);
@@ -381,7 +420,7 @@ void Gedung4(float xp, float yp, float sc)
     x8=3.4;y8=1.4;//V1
     x9=3.4;y9=1.2;//W1
     setcolor(WHITE);
-    setfillstyle(SOLID_FILL,DARKGRAY);
+    setfillstyle(CLOSE_DOT_FILL,DARKGRAY);
     line(x0*sc+xp,-y0*sc+yp,x1*sc+xp,-y1*sc+yp);
     line(x1*sc+xp,-y1*sc+yp,x2*sc+xp,-y2*sc+yp);
     line(x2*sc+xp,-y2*sc+yp,x3*sc+xp,-y3*sc+yp);
@@ -559,7 +598,7 @@ void gameplay()
 
     xplayer= 200;
     yplayer= 200;
-    //sndPlaySound("Sound/gameplay.wav",SND_ASYNC|SND_LOOP);  
+    sndPlaySound(NULL, 0);  
     while(1)
     {
         setactivepage(page);
@@ -568,14 +607,14 @@ void gameplay()
         //start=time(0);
         //printf("%f         ", start);
         printf("%d         ", ny);
-        if((z>50)&&(z<150))
+        if((z>50)&&(z<300)&&(sm==1))
         {
-            bgspeed=3;
+            bgspeed=4;
             readimagefile("Assets/langit.jpg",0,0,1400,700);
         }
-        if(z>150)
+        if((z>300)&&(sm==1))
         {
-            bgspeed=0;
+            bgspeed=1;
         }
         PesawatV2(xp1,yp1,20);
             xp1=xp1-speed*bgspeed*pause;
@@ -1089,13 +1128,14 @@ void gameplay()
                  pause=1;
                  pausescr=0;
                  section=0;
+                 bgspeed = 1;
                  cleardevice();
                  page=page-1;
                  menu();
                  break;
              }
         }
-        if(z > 10)
+        if(z > menang)
         { 
             cleardevice();
             page=page-1;
@@ -1119,17 +1159,19 @@ void win_condition(int *z)
         setactivepage(page);
         setvisualpage(page);
         setcolor(BLUE);
-        readimagefile("Assets/GoFPP.jpg",0,0,1400,700);
+        readimagefile("Assets/WinFPP.jpg",0,0,1400,700);
         settextstyle(0, HORIZ_DIR, 3);
-        sprintf(skor, "Your Final Score = %d", *z);
-        outtextxy(290, 250, "YOU WIN");
-        outtextxy(150, 300, skor);
+        sprintf(skor, "%d", *z);
+        outtextxy(260, 250, "YOU WIN");
+        outtextxy(150, 300, "Your Final Score");
+        outtextxy(280, 350, skor);
         setcolor(WHITE);
         settextstyle(0, HORIZ_DIR, 3);
-        outtextxy(250, 350, "Press [Enter]"); 
-        outtextxy(250, 400, "to Main Menu");
+        outtextxy(200, 400, "Press [Enter]"); 
+        outtextxy(200, 450, "to Main Menu");
         if( GetAsyncKeyState('\r') < 0 )
             {
+                bgspeed = 1;
                 cleardevice();	
                 menu();	
                 break;
@@ -1143,6 +1185,7 @@ void gameover(int *z)
     cleardevice();
     int page=0;
     char skor[9999];
+    bgspeed=1;
     setactivepage(page);
 	setvisualpage(page);
 	while(1)
@@ -1161,6 +1204,7 @@ void gameover(int *z)
         outtextxy(220, 400, "to Main Menu");
         if( GetAsyncKeyState('\r') < 0 )
             {
+                bgspeed = 1;
                 cleardevice();	
                 menu();	
                 break;
@@ -1182,7 +1226,7 @@ void loadingscreen()
         delay(10);
     }
     cleardevice();
-    return menu();
+    return gameplay();
 }
 void menu()
 {
@@ -1199,12 +1243,19 @@ void menu()
 	outtextxy(200, 300, "How To Play");
 	outtextxy(280, 350, "About");
 	outtextxy(290, 400, "Exit");
+    settextstyle(0, HORIZ_DIR, 1);
+    outtextxy(1200, 550, "Press [SPACE] to Change");
+    settextstyle(0, HORIZ_DIR, 2);
+    outtextxy(1120, 560, "Day And Night Mode");
+    settextstyle(0, HORIZ_DIR, 3);
+    outtextxy(1280, 590, "ON ");
     section=0;
 	controls_menu();
 }
 void controls_menu()
 {
     int cm =  1;
+    int cdn=  1;
 	while(1)
        { 
 			if (section==0)
@@ -1266,6 +1317,7 @@ void controls_menu()
 		else if(cm  == 2)
 		{
 				settextstyle(0, HORIZ_DIR, 3);
+                setcolor(15);
 				outtextxy(290, 250, "Play");
 				setcolor(1);
 				outtextxy(200, 300, "How To Play");
@@ -1276,6 +1328,7 @@ void controls_menu()
 		else if(cm  == 3)
 		{
 				settextstyle(0, HORIZ_DIR, 3);
+                setcolor(15);
 				outtextxy(290, 250, "Play");			
 				outtextxy(200, 300, "How To Play");
 				setcolor(1);
@@ -1286,6 +1339,7 @@ void controls_menu()
 		else if(cm  == 4)
 		{
 				settextstyle(0, HORIZ_DIR, 3);
+                setcolor(15);
 				outtextxy(290, 250, "Play");				
 				outtextxy(200, 300, "How To Play");
 				outtextxy(280, 350, "About");
@@ -1293,6 +1347,25 @@ void controls_menu()
 				outtextxy(290, 400, "Exit");
 				setcolor(15);
 		}
+        settextstyle(0, HORIZ_DIR, 3);
+        setcolor(BLUE);
+        if (section==0)
+        {
+            if (GetAsyncKeyState(32)<0)
+            {
+                cdn=cdn+1;
+            }
+            if(cdn%2==0)
+            {
+                outtextxy(1280, 590, "OFF");
+                sm=0;
+            }
+            else
+            {
+                outtextxy(1280, 590, "ON ");
+                sm=1;
+            }
+       }
     }
 }
 void howtoplay()
@@ -1421,21 +1494,27 @@ void level_controls()
 							{
                                 sndPlaySound(NULL,0);
                                 speed=12;
-								gameplay();
+                                menang=500;
+                                cleardevice();
+								loadingscreen();
                                 break;
 							}
 							else if(cm  == 2)
 							{
                                 sndPlaySound(NULL,0);
-                                speed=16;
-								gameplay();
+                                speed=15;
+                                menang=600;
+                                cleardevice();
+								loadingscreen();
                                 break;
 							}
 							else if(cm  == 3)
 							{
                                 sndPlaySound(NULL,0);
                                 speed=18;
-								gameplay();
+                                menang=750;
+                                cleardevice();
+								loadingscreen();
                                 break;
 							}
                         }							
@@ -1472,7 +1551,7 @@ void level_controls()
 int main()
 {
     initwindow(1400, 700, "Fighter Pyscho Pilot");
-    loadingscreen();
+    menu();
     cleardevice();
     return 0;
 }
