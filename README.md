@@ -1,3 +1,3 @@
-# FighterPyschoPilot-graphic.h
+# FighterPyschoPilot-graphics.h
 
 ON PROGRESS :D
