@@ -1034,9 +1034,9 @@ void gameplay()
         {
             xplayer=1320;
         }
-        if(yplayer>670)
+        if(yplayer>450)
         {
-            yplayer=670;
+            yplayer=450;
         }
         if(ismouseclick(WM_LBUTTONDOWN))
         {
@@ -1517,7 +1517,15 @@ void level_controls()
 								loadingscreen();
                                 break;
 							}
-                        }							
+                        }		
+                        if(GetAsyncKeyState(27)<0)
+                        {
+                            section=0;
+                            bgspeed = 1;
+                            cleardevice();	
+                            menu();	
+                            break;
+                        }					
             }     
         if(cm  == 1)
     	{		
